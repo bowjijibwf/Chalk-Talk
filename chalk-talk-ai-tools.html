@@ -15,21 +15,19 @@
       --ink: #07182d;
       --muted: #525e6c;
       --line: rgba(7, 24, 45, 0.12);
-      --accent: #02c8ff;
-      --accent-soft: rgba(2, 200, 255, 0.12);
-      --accent-alt: #0a60ff;
+      --accent: #3070e7;
+      --accent-soft: rgba(48, 112, 231, 0.14);
+      --accent-alt: #16bdeb;
       --accent-mint: #ff9000;
       --shadow: 0 16px 36px rgba(7, 24, 45, 0.08);
       --radius-xl: 28px;
       --radius-lg: 20px;
       --radius-md: 14px;
       --deck-top: clamp(112px, 12vh, 148px);
-      --hero-gradient: linear-gradient(135deg, #07182d 0%, #0a60ff 72%, #02c8ff 100%);
+      --hero-gradient: linear-gradient(135deg, #07182d 0%, #3070e7 66%, #16bdeb 100%);
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     html {
       scroll-behavior: smooth;
@@ -41,8 +39,8 @@
       font-family: "CiscoSansTT", "Avenir Next", "PingFang SC", "Helvetica Neue", sans-serif;
       color: var(--ink);
       background:
-        radial-gradient(circle at top left, rgba(2, 200, 255, 0.12), transparent 34%),
-        radial-gradient(circle at bottom right, rgba(10, 96, 255, 0.08), transparent 30%),
+        radial-gradient(circle at top left, rgba(22, 189, 235, 0.12), transparent 34%),
+        radial-gradient(circle at bottom right, rgba(48, 112, 231, 0.1), transparent 30%),
         linear-gradient(180deg, var(--bg) 0%, var(--bg-deep) 100%);
       overflow: hidden;
     }
@@ -61,7 +59,7 @@
 
     a {
       color: inherit;
-      text-decoration-color: rgba(2, 200, 255, 0.4);
+      text-decoration-color: rgba(48, 112, 231, 0.4);
       text-underline-offset: 3px;
     }
 
@@ -103,10 +101,6 @@
       font-size: 18px;
       font-weight: 700;
       box-shadow: 0 12px 28px rgba(9, 41, 84, 0.25);
-    }
-
-    .brand-text {
-      min-width: 0;
     }
 
     .brand-kicker {
@@ -153,58 +147,130 @@
       white-space: nowrap;
     }
 
+    .section-name {
+      color: var(--accent);
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .help-hint {
+      margin-left: 4px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(7, 24, 45, 0.12);
+      background: rgba(255, 255, 255, 0.88);
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .overview-chip {
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(7, 24, 45, 0.14);
+      background: rgba(255, 255, 255, 0.9);
+      color: var(--ink);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
     .deck {
       height: 100vh;
       overflow-y: auto;
       scroll-snap-type: y mandatory;
-      /* disable extra snap padding so slides can center cleanly */
-      scroll-padding-top: 0;
       padding-top: var(--deck-top);
     }
 
     .slide {
       min-height: 100vh;
-      /* center each slide in the viewport so previous slide isn't visible after scroll */
       scroll-snap-align: center;
       scroll-margin-top: calc(var(--deck-top) + 20px);
-      /* reduce large vertical padding so content truly centers visually */
       padding: 32px 72px;
       display: grid;
       grid-template-columns: minmax(0, 1fr) 300px;
       gap: 26px;
       align-items: center;
       position: relative;
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 360ms ease, transform 360ms ease;
+    }
+
+    .slide.in-view {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     .main-col,
-    .side-col {
+    .side-col,
+    .badges,
+    .meta-pills,
+    .triad,
+    .grid-2,
+    .grid-3,
+    .grid-4,
+    .timeline,
+    .case-grid,
+    .tool-ladder,
+    .scorecards,
+    .resource-links,
+    .action-list,
+    .select-grid,
+    .feature-list,
+    .caution-list,
+    .workflow-list {
       display: grid;
-      gap: 18px;
-      align-content: center;
+      gap: 14px;
     }
 
-    .card {
+    .main-col,
+    .side-col { align-content: center; gap: 18px; }
+
+    .card,
+    .side-card,
+    .mini-card,
+    .tool-step,
+    .metric,
+    .feature-item,
+    .selection-card,
+    .flow-card,
+    .resource-link,
+    .arch-box {
       position: relative;
       border: 1px solid var(--line);
       border-radius: var(--radius-xl);
-      padding: 24px;
+      padding: 20px;
       background: var(--panel-gradient);
       box-shadow: var(--shadow);
-      backdrop-filter: blur(8px);
       overflow: hidden;
     }
 
-    .card-strong {
-      background: var(--panel-gradient-soft);
+    .card-strong { background: var(--panel-gradient-soft); }
+
+    .card:not(.hero)::before,
+    .side-card::before,
+    .mini-card::before,
+    .tool-step::before,
+    .metric::before,
+    .feature-item::before,
+    .selection-card::before,
+    .flow-card::before,
+    .resource-link::before,
+    .arch-box::before {
+      content: "";
+      position: absolute;
+      inset: 0 auto auto 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, var(--accent-alt), rgba(48, 112, 231, 0.35));
     }
 
     .hero {
       background: var(--hero-gradient);
       color: #fff;
-      position: relative;
-      overflow: hidden;
       min-height: 520px;
-      border: 1px solid rgba(2, 200, 255, 0.14);
+      border: 1px solid rgba(22, 189, 235, 0.2);
     }
 
     .hero::before,
@@ -216,19 +282,8 @@
       background: radial-gradient(circle, rgba(255, 255, 255, 0.9), transparent 68%);
     }
 
-    .hero::before {
-      width: 360px;
-      height: 360px;
-      top: -120px;
-      right: -60px;
-    }
-
-    .hero::after {
-      width: 260px;
-      height: 260px;
-      left: -50px;
-      bottom: -70px;
-    }
+    .hero::before { width: 360px; height: 360px; top: -120px; right: -60px; }
+    .hero::after { width: 260px; height: 260px; left: -50px; bottom: -70px; }
 
     .eyebrow {
       margin: 0 0 12px;
@@ -239,13 +294,7 @@
       opacity: 0.82;
     }
 
-    h1,
-    h2,
-    h3,
-    h4,
-    p {
-      margin: 0;
-    }
+    h1, h2, h3, h4, p { margin: 0; }
 
     h1 {
       font-size: clamp(46px, 7vw, 76px);
@@ -262,39 +311,29 @@
       text-wrap: balance;
     }
 
-    h3 {
-      font-size: 20px;
-      line-height: 1.1;
-      letter-spacing: -0.02em;
+    h3 { font-size: 20px; line-height: 1.1; letter-spacing: -0.02em; }
+    .lead { font-size: clamp(18px, 2vw, 24px); line-height: 1.6; opacity: 0.95; }
+
+    .section-head { display: grid; gap: 10px; }
+
+    .section-kicker {
+      font-size: 13px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent-alt);
+      font-weight: 700;
     }
 
-    .lead {
-      font-size: clamp(18px, 2vw, 24px);
-      line-height: 1.6;
-      opacity: 0.95;
-    }
+    .section-copy { color: var(--muted); line-height: 1.72; font-size: 16px; }
 
-    .badges,
-    .meta-pills,
-    .triad,
-    .grid-2,
-    .grid-3,
-    .grid-4,
-    .timeline,
-    .case-grid,
-    .tool-ladder,
-    .scorecards,
-    .resource-links,
-    .action-list,
-    .select-grid {
-      display: grid;
-      gap: 14px;
-    }
-
-    .badges {
-      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-      margin-top: 28px;
-    }
+    .badges { grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); margin-top: 28px; }
+    .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .grid-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .triad { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .tool-ladder { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+    .resource-links { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+    .arch-row { display: grid; gap: 12px; grid-template-columns: repeat(4, minmax(0, 1fr)); }
 
     .badge {
       padding: 14px 16px;
@@ -308,21 +347,9 @@
       align-items: center;
     }
 
-    .badge strong {
-      font-size: 15px;
-      font-weight: 700;
-    }
-
-    .badge span {
-      opacity: 0.78;
-    }
-
-    .hero-footer {
-      margin-top: 28px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
+    .badge strong { font-size: 15px; font-weight: 700; }
+    .badge span { opacity: 0.78; }
+    .hero-footer { margin-top: 28px; display: flex; flex-wrap: wrap; gap: 10px; }
 
     .pill {
       display: inline-flex;
@@ -335,78 +362,39 @@
       font-size: 13px;
     }
 
-    .section-head {
+    .tool-step { min-height: 210px; align-content: start; gap: 12px; border-radius: var(--radius-lg); }
+    .tool-step::after {
+      content: "";
+      position: absolute;
+      top: 28px;
+      right: -14px;
+      width: 28px;
+      height: 2px;
+      background: linear-gradient(90deg, rgba(22, 189, 235, 0.2), rgba(255, 144, 0, 0.5));
+    }
+
+    .tool-step:last-child::after { display: none; }
+
+    .step-index {
+      width: 34px;
+      height: 34px;
+      border-radius: 11px;
       display: grid;
-      gap: 10px;
-    }
-
-    .section-kicker {
-      font-size: 13px;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--accent-alt);
+      place-items: center;
+      color: #fff;
       font-weight: 700;
+      background: linear-gradient(135deg, var(--accent), var(--accent-alt));
     }
 
-    .section-copy {
-      color: var(--muted);
-      line-height: 1.72;
-      font-size: 16px;
-    }
-
-    .formula {
-      display: grid;
-      gap: 18px;
-      align-items: center;
-      padding: 24px;
-      border-radius: var(--radius-xl);
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.7));
-      border: 1px solid rgba(16, 35, 61, 0.1);
-    }
-
-    .formula-line {
-      font-size: clamp(28px, 3vw, 42px);
-      line-height: 1.15;
-      font-weight: 700;
-      letter-spacing: -0.05em;
-    }
-
-    .formula-line strong {
+    .step-tag {
+      display: inline-flex;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: var(--accent-soft);
       color: var(--accent);
-    }
-
-    .formula-note {
-      color: var(--muted);
-      font-size: 15px;
-      line-height: 1.6;
-    }
-
-    .grid-3 {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-
-    .grid-2 {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    .grid-4 {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-    }
-
-    .mini-card {
-      position: relative;
-      padding: 18px;
-      border-radius: var(--radius-lg);
-      background: var(--panel-gradient);
-      border: 1px solid rgba(7, 24, 45, 0.08);
-      display: grid;
-      gap: 10px;
-      overflow: hidden;
-    }
-
-    .mini-card strong,
-    .mini-card h4 {
-      font-size: 18px;
+      font-size: 12px;
+      font-weight: 700;
+      width: fit-content;
     }
 
     .mini-card p,
@@ -417,282 +405,30 @@
     .selection-card li,
     .flow-card p,
     .flow-card li,
+    .feature-item p,
+    .resource-link p,
     table {
       color: var(--muted);
-      line-height: 1.55;
+      line-height: 1.6;
       font-size: 15px;
     }
 
-    ul,
-    ol {
-      margin: 0;
-      padding-left: 20px;
-    }
+    ul, ol { margin: 0; padding-left: 20px; }
+    li + li { margin-top: 8px; }
 
-    li + li {
-      margin-top: 8px;
-    }
-
-    .tool-ladder {
-      grid-template-columns: repeat(5, minmax(0, 1fr));
-    }
-
-    .tool-step {
-      min-height: 210px;
+    .callout {
       padding: 18px;
-      border-radius: var(--radius-lg);
-      background: var(--panel-gradient);
-      border: 1px solid rgba(7, 24, 45, 0.08);
-      display: grid;
-      gap: 12px;
-      align-content: start;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .tool-step::after {
-      content: "";
-      position: absolute;
-      top: 28px;
-      right: -14px;
-      width: 28px;
-      height: 2px;
-      background: linear-gradient(90deg, rgba(0, 116, 147, 0.2), rgba(221, 122, 24, 0.5));
-    }
-
-    .tool-step:last-child::after {
-      display: none;
-    }
-
-    .step-index {
-      width: 34px;
-      height: 34px;
-      border-radius: 11px;
-      display: grid;
-      place-items: center;
-      color: #fff;
-      font-weight: 700;
-      background: linear-gradient(135deg, var(--accent-alt), var(--accent));
-    }
-
-    .step-tag {
-      display: inline-flex;
-      padding: 6px 10px;
-      border-radius: 999px;
-      background: rgba(2, 200, 255, 0.12);
-      color: var(--accent-alt);
-      font-size: 12px;
-      font-weight: 700;
-      width: fit-content;
-    }
-
-    .side-card {
-      position: relative;
-      padding: 20px;
-      border-radius: var(--radius-xl);
-      background: var(--panel-gradient);
-      border: 1px solid rgba(7, 24, 45, 0.08);
-      box-shadow: var(--shadow);
-      display: grid;
-      gap: 12px;
-      overflow: hidden;
-    }
-
-    .side-card h4 {
-      font-size: 14px;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--accent-alt);
-    }
-
-    .triad {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-
-    .metric {
-      position: relative;
-      padding: 16px;
-      border-radius: var(--radius-lg);
-      background: var(--panel-gradient);
-      border: 1px solid rgba(7, 24, 45, 0.08);
-      display: grid;
-      gap: 10px;
-      overflow: hidden;
-    }
-
-    .metric-head {
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      align-items: baseline;
-    }
-
-    .metric-head strong {
-      font-size: 16px;
-    }
-
-    .metric-head span {
-      font-size: 12px;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-    }
-
-    .bar {
-      height: 12px;
-      border-radius: 999px;
-      background: rgba(16, 35, 61, 0.08);
-      overflow: hidden;
-    }
-
-    .bar > span {
-      display: block;
-      height: 100%;
-      width: var(--fill);
-      background: linear-gradient(90deg, var(--accent), var(--accent-alt));
-      border-radius: inherit;
-    }
-
-    .score-note {
-      font-size: 13px;
-      color: var(--muted);
-    }
-
-    .feature-list,
-    .caution-list,
-    .workflow-list {
-      display: grid;
-      gap: 14px;
-    }
-
-    .feature-item,
-    .selection-card,
-    .flow-card {
-      position: relative;
-      padding: 16px 18px;
-      border-radius: var(--radius-lg);
-      background: var(--panel-gradient);
-      border: 1px solid rgba(7, 24, 45, 0.08);
-      display: grid;
-      gap: 8px;
-      overflow: hidden;
-    }
-
-    .feature-item strong,
-    .selection-card strong,
-    .flow-card strong {
-      font-size: 16px;
-    }
-
-    .shot-placeholder {
-      min-height: 350px;
-      border-radius: var(--radius-xl);
-      border: 2px dashed rgba(10, 96, 255, 0.24);
-      background:
-        linear-gradient(135deg, rgba(2, 200, 255, 0.08), rgba(255, 255, 255, 0.94)),
-        repeating-linear-gradient(135deg, rgba(10, 96, 255, 0.04), rgba(10, 96, 255, 0.04) 12px, rgba(255, 255, 255, 0.18) 12px, rgba(255, 255, 255, 0.18) 24px);
-      padding: 24px;
-      display: grid;
-      gap: 14px;
-      align-content: center;
-      aspect-ratio: 16 / 9;
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.65);
-    }
-
-    .shot-tag {
-      width: fit-content;
-      padding: 6px 10px;
-      border-radius: 999px;
-      background: rgba(2, 200, 255, 0.12);
-      color: var(--accent-alt);
-      font-size: 12px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      font-weight: 700;
-    }
-
-    .shot-placeholder h3 {
-      font-size: 28px;
-      max-width: 22ch;
-      text-wrap: balance;
-    }
-
-    .shot-placeholder p {
-      color: var(--muted);
-      line-height: 1.6;
-      max-width: 48ch;
-    }
-
-    .note-band {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-
-    .note-band span {
-      padding: 10px 12px;
-      border-radius: 999px;
-      background: rgba(7, 24, 45, 0.06);
-      font-size: 13px;
+      border-left: 4px solid var(--accent-mint);
+      border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+      background: rgba(255, 144, 0, 0.08);
       color: var(--ink);
-    }
-
-    .resource-links {
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    }
-
-    .resource-link {
-      position: relative;
-      padding: 16px 18px;
-      border-radius: var(--radius-lg);
-      background: var(--panel-gradient);
-      border: 1px solid rgba(7, 24, 45, 0.08);
-      display: grid;
-      gap: 8px;
-      overflow: hidden;
+      line-height: 1.6;
     }
 
     .resource-link a {
-      color: var(--accent-alt);
+      color: var(--accent);
       font-weight: 700;
       text-decoration: none;
-    }
-
-    .arch {
-      display: grid;
-      gap: 12px;
-    }
-
-    .arch-row {
-      display: grid;
-      gap: 12px;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      align-items: center;
-    }
-
-    .arch-box {
-      position: relative;
-      min-height: 110px;
-      padding: 16px;
-      border-radius: var(--radius-lg);
-      border: 1px solid rgba(7, 24, 45, 0.08);
-      background: var(--panel-gradient);
-      display: grid;
-      gap: 8px;
-      align-content: start;
-      overflow: hidden;
-    }
-
-    .arch-box strong {
-      font-size: 16px;
-    }
-
-    .arrow {
-      display: grid;
-      place-items: center;
-      color: var(--accent-alt);
-      font-size: 28px;
-      font-weight: 700;
     }
 
     .compare-table {
@@ -713,20 +449,15 @@
     }
 
     .compare-table th {
-      background: rgba(2, 200, 255, 0.12);
+      background: var(--accent-soft);
       color: var(--ink);
       font-size: 13px;
       text-transform: uppercase;
       letter-spacing: 0.12em;
     }
 
-    .compare-table tr:last-child td {
-      border-bottom: none;
-    }
-
-    .compare-table td strong {
-      color: var(--ink);
-    }
+    .compare-table tr:last-child td { border-bottom: none; }
+    .compare-table td strong { color: var(--ink); }
 
     .dot-nav {
       position: fixed;
@@ -747,16 +478,13 @@
       transition: transform 180ms ease, background 180ms ease;
     }
 
-    .dot-nav a.active {
-      background: var(--accent);
-      transform: scale(1.25);
-    }
+    .dot-nav a.active { background: var(--accent); transform: scale(1.25); }
 
     .deck-controls {
       position: fixed;
       right: 22px;
       bottom: 22px;
-      z-index: 15;
+      z-index: 16;
       display: flex;
       gap: 12px;
     }
@@ -772,45 +500,44 @@
       box-shadow: 0 14px 28px rgba(7, 24, 45, 0.16);
     }
 
-    .current-slide {
-      font-weight: 700;
-      color: var(--ink);
+    .click-zone {
+      position: fixed;
+      top: var(--deck-top);
+      bottom: 0;
+      width: min(10vw, 150px);
+      z-index: 8;
+      border: 0;
+      background: transparent;
+      cursor: pointer;
+      opacity: 0;
+      transition: opacity 220ms ease;
     }
 
-    .muted {
-      color: var(--muted);
-    }
+    .click-zone:hover { opacity: 1; background: linear-gradient(90deg, rgba(48, 112, 231, 0.08), transparent); }
+    .click-zone.next:hover { background: linear-gradient(270deg, rgba(48, 112, 231, 0.08), transparent); }
+    .click-zone.prev { left: 0; }
+    .click-zone.next { right: 0; }
 
-    .accent {
-      color: var(--accent);
-    }
+    .current-slide { font-weight: 700; color: var(--ink); }
+    .muted { color: var(--muted); }
+    .accent { color: var(--accent); }
 
-    .callout {
-      padding: 18px;
-      border-left: 4px solid var(--accent-mint);
-      border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
-      background: rgba(255, 144, 0, 0.08);
-      color: var(--ink);
-      line-height: 1.6;
-    }
-
-    .card:not(.hero)::before,
-    .mini-card::before,
-    .tool-step::before,
-    .side-card::before,
-    .metric::before,
-    .feature-item::before,
-    .selection-card::before,
-    .flow-card::before,
-    .resource-link::before,
-    .arch-box::before {
-      content: "";
+    .slide-footer {
       position: absolute;
-      inset: 0 auto auto 0;
-      width: 100%;
-      height: 4px;
-      background: linear-gradient(90deg, rgba(2, 200, 255, 0.9), rgba(10, 96, 255, 0.35));
+      left: 72px;
+      right: 72px;
+      bottom: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: rgba(82, 94, 108, 0.92);
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      pointer-events: none;
     }
+
+    .slide-footer strong { color: var(--accent); letter-spacing: 0.08em; }
 
     .title-line,
     .no-break {
@@ -819,104 +546,73 @@
       overflow-wrap: anywhere;
     }
 
+    .deck.overview {
+      scroll-snap-type: none;
+      height: auto;
+      overflow-y: auto;
+      padding: calc(var(--deck-top) + 16px) 22px 28px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 14px;
+    }
+
+    .deck.overview .slide {
+      min-height: 340px;
+      border-radius: 20px;
+      border: 1px solid rgba(7, 24, 45, 0.14);
+      padding: 22px;
+      grid-template-columns: 1fr;
+      cursor: pointer;
+      box-shadow: 0 10px 24px rgba(7, 24, 45, 0.08);
+      scroll-snap-align: none;
+      scroll-margin-top: 0;
+      opacity: 1;
+      transform: none;
+    }
+
+    .deck.overview .side-col,
+    .deck.overview .slide-footer { display: none; }
+    .deck.overview .hero { min-height: 220px; }
+    .deck.overview h1 { font-size: clamp(34px, 4vw, 52px); }
+    .deck.overview h2 { font-size: clamp(24px, 2.4vw, 32px); }
+
     @media (max-width: 1240px) {
-      .slide {
-        padding-left: 56px;
-        padding-right: 56px;
-      }
-
-      .tool-ladder,
-      .arch-row {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-
-      .tool-step::after {
-        display: none;
-      }
+      .slide { padding-left: 56px; padding-right: 56px; }
+      .slide-footer { left: 56px; right: 56px; }
+      .tool-ladder, .arch-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .tool-step::after { display: none; }
     }
 
     @media (max-width: 980px) {
-      body {
-        overflow: auto;
-      }
-
-      .topbar {
-        padding-inline: 16px;
-      }
-
-      .topbar-row {
-        flex-wrap: wrap;
-      }
-
-      .progress-shell {
-        order: 3;
-        width: 100%;
-        flex-basis: 100%;
-      }
-
-      .deck {
-        height: auto;
-        overflow-y: visible;
-        padding-top: calc(var(--deck-top) + 12px);
-      }
-
-      .slide {
-        grid-template-columns: 1fr;
-        padding: 34px 18px 48px;
-      }
-
-      .grid-2,
-      .grid-3,
-      .grid-4,
-      .triad,
-      .resource-links,
-      .tool-ladder,
-      .arch-row {
-        grid-template-columns: 1fr;
-      }
-
-      .dot-nav {
-        display: none;
-      }
-
-      .deck-controls {
-        right: 14px;
-        bottom: 14px;
-      }
+      body { overflow: auto; }
+      .topbar { padding-inline: 16px; }
+      .topbar-row { flex-wrap: wrap; }
+      .progress-shell { order: 3; width: 100%; flex-basis: 100%; }
+      .deck { height: auto; overflow-y: visible; padding-top: calc(var(--deck-top) + 12px); }
+      .slide { grid-template-columns: 1fr; padding: 34px 18px 48px; }
+      .slide-footer { left: 18px; right: 18px; bottom: 8px; }
+      .grid-2, .grid-3, .grid-4, .triad, .resource-links, .tool-ladder, .arch-row { grid-template-columns: 1fr; }
+      .dot-nav, .click-zone, .help-hint, .overview-chip { display: none; }
+      .deck-controls { right: 14px; bottom: 14px; }
+      .deck.overview { display: block; padding-inline: 0; }
+      .deck.overview .slide { min-height: auto; margin-bottom: 14px; }
     }
 
     @media print {
-      body {
-        overflow: visible;
-        background: #fff;
-      }
-
-      body::before,
-      .topbar,
-      .dot-nav,
-      .deck-controls {
-        display: none;
-      }
-
-      .deck {
-        height: auto;
-        overflow: visible;
-        padding-top: 0;
-      }
-
+      body { overflow: visible; background: #fff; }
+      body::before, .topbar, .dot-nav, .deck-controls, .click-zone { display: none; }
+      .deck { height: auto; overflow: visible; padding-top: 0; }
       .slide {
         min-height: auto;
         page-break-after: always;
         break-after: page;
         grid-template-columns: 1fr;
         padding: 20mm;
+        opacity: 1;
+        transform: none;
       }
 
-      .card,
-      .side-card,
-      .compare-table {
-        box-shadow: none;
-      }
+      .card, .side-card, .compare-table { box-shadow: none; }
     }
   </style>
 </head>
@@ -927,16 +623,19 @@
         <div class="brand-mark">TAC</div>
         <div class="brand-text">
           <p class="brand-kicker">Cisco TAC AI Chalk Talk</p>
-          <p class="brand-title" id="topbarTitle">AI 驱动的排障革命：TAC 实战工具箱选型</p>
+          <p class="brand-title" id="topbarTitle">与AI共同成长：TAC AI 工具箱</p>
         </div>
       </div>
       <div class="progress-shell" aria-hidden="true">
         <div class="progress-fill" id="progressFill"></div>
       </div>
       <div class="topbar-meta">
-        <span class="current-slide" id="slideCounter">01 / 16</span>
+        <span class="current-slide" id="slideCounter">01 / 15</span>
+        <span class="section-name" id="sectionName">Overview</span>
         <span>30 min</span>
         <span>Audience</span>
+        <span class="help-hint">O 概览 | F 全屏</span>
+        <span class="overview-chip" id="overviewState">Story Mode</span>
       </div>
     </div>
   </header>
@@ -944,7 +643,6 @@
   <nav class="dot-nav" aria-label="Slide navigation">
     <a href="#slide-01" data-target="slide-01" class="active"></a>
     <a href="#slide-02" data-target="slide-02"></a>
-    <a href="#slide-03" data-target="slide-03"></a>
     <a href="#slide-04" data-target="slide-04"></a>
     <a href="#slide-05" data-target="slide-05"></a>
     <a href="#slide-06" data-target="slide-06"></a>
@@ -961,15 +659,15 @@
   </nav>
 
   <main class="deck" id="deck">
-    <section class="slide" id="slide-01" data-title="AI 驱动的排障革命：TAC 实战工具箱选型">
+    <section class="slide" id="slide-01" data-title="与AI共同成长：TAC AI 工具箱">
       <div class="main-col">
         <article class="card hero">
           <p class="eyebrow">Cisco Internal AI Tooling</p>
           <h1>与AI共同成长：<br>       TAC AI 工具箱</h1>
           <p class="lead" style="margin-top: 10px; font-weight: bold; color: rgba(255,255,255,0.85); font-size: 20px;">讲师：Bowen Ji | 2026 年 5 月</p>
-          <p class="lead" style="margin-top: 20px;">围绕CASE处理、文档检索、附件分析、领域知识与定制 Agent，梳理各类工具的能力边界、适用场景与使用注意事项。</p>
+          <p class="lead" style="margin-top: 20px;">围绕 CASE 处理、文档检索、附件分析、领域知识与定制 Agent，梳理这些工具分别适合做什么、什么时候该换刀、哪些地方一定要靠工程师自己把关。</p>
           <div class="badges">
-            <div class="badge"><strong>TAC Copilot</strong><span>基于 CASE note 的内容生成</span></div>
+            <div class="badge"><strong>TAC Copilot</strong><span>基于 CASE note 的分析</span></div>
             <div class="badge"><strong>Docs-AI</strong><span>基于官方文档的检索与问答</span></div>
             <div class="badge"><strong>File Copilot</strong><span>多附件、多格式的深度分析</span></div>
             <div class="badge"><strong>SMX</strong><span>面向领域知识的专家助手</span></div>
@@ -977,28 +675,27 @@
           </div>
           <div class="hero-footer">
             <span class="pill">30 分钟</span>
+            <span class="pill">通用框架</span>
+            <span class="pill">5 个工具</span>
+            <span class="pill">2 个案例</span>
           </div>
         </article>
       </div>
       <aside class="side-col">
         <div class="side-card">
           <h4>分享目标</h4>
-          <p>建立一套面向 TAC 日常场景的工具选型框架，帮助团队按任务类型选择合适的 AI 能力，而不是泛化地讨论“哪个工具更强”。</p>
-        </div>
-        <div class="side-card">
-          <h4>覆盖范围</h4>
-          <ul>
-            <li>客户沟通与案例摘要</li>
-            <li>官方文档核对与依据引用</li>
-            <li>附件分析、领域知识与定制化工作流</li>
-          </ul>
+          <p>围绕 TAC 日常工作，帮助大家更好地理解和使用这些 AI 工具，把重复整理工作交给 AI，把工程判断留给自己。</p>
         </div>
         <div class="side-card">
           <h4>分享结构</h4>
+          <p>先讲一个通用框架，再逐一介绍 5 个工具，最后分享 2 个典型案例。</p>
+        </div>
+        <div class="side-card">
+          <h4>互动方式</h4>
           <ul>
-            <li>产出质量的基本前提</li>
-            <li>五类工具的能力梯度</li>
-            <li>逐项说明场景、价值与注意事项</li>
+            <li>这 5 个工具彼此没有太多依赖</li>
+            <li>中间有问题可以随时打断</li>
+            <li>重点是讲清楚每种工具的边界</li>
           </ul>
         </div>
       </aside>
@@ -1009,91 +706,35 @@
         <div class="section-head">
           <p class="section-kicker">Method</p>
           <h2>AI 产出质量的三个决定因素</h2>
-          <p class="section-copy">无论使用哪一类工具，最终效果都取决于三个前提：模型能力是否足够、任务上下文是否准确、系统是否获得了完成推理所需的时间与工具。</p>
+          <p class="section-copy">先记住一个通用规则：有效产出 = 模型能力 × 任务上下文 × 推理预算。这是乘法，不是加法。任何一项太弱，整体效果都会明显下降。</p>
         </div>
         <div class="formula">
           <div class="formula-line">有效产出 = <strong>模型能力</strong> × <strong>任务上下文</strong> × <strong>推理预算</strong></div>
-          <p class="formula-note">在 TAC 场景中，失败往往不是由单一因素造成，而是源于三者中的至少一项配置不足。后续各工具不再重复展开这一原则，而是聚焦其最关键的使用注意事项。</p>
+          <p class="formula-note">从“提示词工程”到 Context Engineering、Harness Engineering，本质都在解决两件事：给足正确上下文，并为复杂任务留出足够推理时间。</p>
         </div>
         <div class="grid-3">
           <div class="mini-card">
             <h4>1. 模型能力</h4>
-            <p>决定系统是否能够理解复杂问题、完成跨步骤分析，并产出可直接使用的结果。</p>
+            <p>模型越强，越能理解复杂问题、完成跨步骤分析，也越不需要依赖技巧型提示词去“硬拽”答案。</p>
           </div>
           <div class="mini-card">
             <h4>2. 任务上下文</h4>
-            <p>决定系统是否基于正确材料开展推理。CASE note、官方文档、附件日志、知识库与 BUG 数据均属于上下文来源。</p>
+            <p>AI 是基于你给的上下文做推理的。CASE note、附件、官方文档、知识库和 BUG 线索是否准确，直接决定结论质量。</p>
           </div>
           <div class="mini-card">
             <h4>3. 推理预算</h4>
-            <p>决定系统能否完成多步检索、跨文件关联与工具调用。复杂排障任务通常需要更长的推理链和更完整的执行过程。</p>
+            <p>TAC 的 CASE 往往不是一句话能答完的问题。复杂排障需要多步检索、交叉验证和工具调用，要给 AI 足够时间。</p>
           </div>
         </div>
       </div>
       <aside class="side-col">
         <div class="side-card">
-          <h4>后续呈现方式</h4>
-          <p>后续每一类工具主要回答两个问题：</p>
-          <ul>
-            <li>适合解决哪一类 TAC 任务</li>
-            <li>实际使用时需要注意什么</li>
-          </ul>
+          <h4>为什么是乘法</h4>
+          <p>如果模型不够强，上下文再好也推不深；如果上下文不对，再强的模型也会跑偏；如果不给时间，复杂任务只会停留在浅层回答。</p>
         </div>
         <div class="side-card">
-          <h4>核心结论</h4>
-          <p>工具能力的上限，往往由输入材料质量和任务定义质量共同决定。</p>
-        </div>
-      </aside>
-    </section>
-
-    <section class="slide" id="slide-03" data-title="五类工具的能力梯度与选型关系">
-      <div class="main-col">
-        <div class="section-head">
-          <p class="section-kicker">Capability Map</p>
-          <h2>五类工具的能力梯度与选型关系</h2>
-          <p class="section-copy">这五类工具并非替代关系，而是从贴近案例处理到高度定制化能力的递进关系：先解决内容生成与文档核对，再进入多附件分析、领域专家知识与 Agent 编排。</p>
-        </div>
-        <div class="tool-ladder">
-          <div class="tool-step">
-            <div class="step-index">1</div>
-            <span class="step-tag">近场提效</span>
-            <h3>TAC Copilot</h3>
-            <p>最贴近当前 CASE 流程，适合将 note 转化为客户可读的正式输出。</p>
-          </div>
-          <div class="tool-step">
-            <div class="step-index">2</div>
-            <span class="step-tag">权威检索</span>
-            <h3>Docs-AI</h3>
-            <p>最适合回答“官方文档如何定义该功能、行为或限制”。</p>
-          </div>
-          <div class="tool-step">
-            <div class="step-index">3</div>
-            <span class="step-tag">深度分析</span>
-            <h3>File Copilot</h3>
-            <p>最适合跨附件、多格式和多设备的相关性分析与故障归因。</p>
-          </div>
-          <div class="tool-step">
-            <div class="step-index">4</div>
-            <span class="step-tag">领域专家</span>
-            <h3>SMX</h3>
-            <p>最适合依赖团队私有知识、内部流程或代码级理解的场景。</p>
-          </div>
-          <div class="tool-step">
-            <div class="step-index">5</div>
-            <span class="step-tag">定制 Agent</span>
-            <h3>GitHub Copilot + MCP</h3>
-            <p>将模型、工具与数据源编排成可复用的高级工作流与执行能力。</p>
-          </div>
-        </div>
-        <div class="selection-card">
-          <strong>选型原则</strong>
-          <p>优先选择与任务距离最近、且已具备足够上下文的工具。没有必要用最复杂的 Agent 处理最简单的输出任务。</p>
-        </div>
-      </div>
-      <aside class="side-col">
-        <div class="side-card">
-          <h4>分享重点</h4>
-          <p>本次分享的目标不是罗列功能，而是建立“问题类型到工具选择”的映射关系。</p>
+          <h4>现场提醒</h4>
+          <p>后面每个工具都只是把这三件事组合得更好，不会绕开这三个前提。</p>
         </div>
       </aside>
     </section>
@@ -1103,31 +744,31 @@
         <div class="section-head">
           <p class="section-kicker">Tool 1</p>
           <h2><span class="no-break">TAC Copilot</span>：最贴近 CASE 处理流的助手</h2>
-          <p class="section-copy">TAC Copilot 面向 TAC 工程师提供基于 CASE note 的内容生成能力，可辅助形成客户响应、GCI、RCA 和 Resolution Summary 等输出。</p>
+          <p class="section-copy">相信大家多多少少都用过。它最擅长的不是“替你判断”，而是把 CASE note 快速整理成客户更新、Resolution Summary 或 RCA 草稿，把可对外表达的话迅速组织出来。</p>
         </div>
         <div class="grid-2">
           <div class="feature-list">
             <div class="feature-item">
               <strong>核心价值</strong>
-              <p>将现有 CASE 信息快速整理为客户可读、结构清晰的正式输出，减少重复写作与摘要整理成本。</p>
+              <p>把现有 CASE 信息快速整理成客户可读、结构清晰的正式输出，减少重复写作与摘要整理成本。</p>
             </div>
             <div class="feature-item">
-              <strong>典型场景与典型输出</strong>
-              <p>快速生成客户更新邮件、案例摘要、case audit、Resolution Summary 或 GCI / RCA 草稿，并将现有记录整理为初步 BUG 线索。（最终内容仍需工程师复核与调整）</p>
+              <strong>典型输出</strong>
+              <p>客户更新邮件、案例摘要、Resolution Summary 或 RCA 草稿，以及把当前记录整理成初步 BUG 线索。（最终内容仍需工程师复核）</p>
             </div>
             <div class="feature-item">
               <strong>使用注意事项</strong>
-              <p>其主要推理基础是 CASE note。默认不会纳入 internal note，因此需要提前将可对外表达的关键事实、结论和下一步计划整理到有效 note 中。</p>
+              <p>它主要基于 CASE note 做推理。internal note 默认不会自动纳入，需要提前设置或手动打开。</p>
             </div>
           </div>
           <div class="feature-list">
             <div class="feature-item">
-              <strong>联动数据能力</strong>
-              <p>除 CASE note 外，可联动 RAG 数据、Bugbuster、Topic Search 与 BORG 签名，用于补充缺陷线索、相似主题和平台特征提示。</p>
+              <strong>联动上下文</strong>
+              <p>除 CASE note 外，还可联动 RAG、Bugbuster、Topic Search 等数据源，为缺陷线索和相似主题补充上下文。</p>
             </div>
             <div class="feature-item">
-              <strong>边界</strong>
-              <p>适合单案例内的内容生成与缺陷线索整理，不适合承担多设备、多附件的复杂根因关联分析。</p>
+              <strong>当前边界</strong>
+              <p>暂时不能直接读取附件；更适合单 CASE 内的整理和重写，不适合多附件、多设备的深度关联分析。</p>
             </div>
           </div>
         </div>
@@ -1142,9 +783,12 @@
           </ul>
         </div>
         <div class="side-card">
-          <h4>相关链接</h4>
-          <p><a href="https://cisco.sharepoint.com/sites/TAC-Copilot/SitePages/Home.aspx" target="_blank" rel="noreferrer">TAC Copilot 工具介绍</a> <span class="muted">(非工具入口)</span></p>
-          <p class="muted">需要 Cisco 内网与 SSO。</p>
+          <h4>边界提醒</h4>
+          <ul>
+            <li>默认读 CASE note，不等于自动读 internal note</li>
+            <li>暂时不能看附件</li>
+            <li>不是拿来替代工程判断的</li>
+          </ul>
         </div>
       </aside>
     </section>
@@ -1154,7 +798,7 @@
         <div class="section-head">
           <p class="section-kicker">Case 1</p>
           <h2>案例：N9K 更换 PSU 后序列号未刷新</h2>
-          <p class="section-copy">TAC Copilot 联动 RAG、Bugbuster、Topic Search 与 BORG 签名后，快速完成缺陷排查与 SR 收口建议。这个案例的关键不在于“找到一个 bug ID”，而在于形成可直接对客户解释的工程结论。</p>
+          <p class="section-copy">这个版本还比较新，没有找到现成的已知 BUG。TAC Copilot 的价值，在于先把工程上能成立的口径组织出来：序列号可能被缓存；对客户说明时，要把问题性质、workaround 和可选路径讲清楚。</p>
         </div>
         <div class="grid-2">
           <div class="feature-list">
@@ -1184,7 +828,7 @@
             </div>
           </div>
         </div>
-        <div class="callout">案例结论：TAC Copilot 的价值不只是重写文字，而是在“没有 clean public bug”的情况下，快速给出可落地、可对客的工程口径。</div>
+        <div class="callout">案例结论：TAC Copilot 的价值不是替代判断，而是先把可对客表达的话整理好，留给工程师去校验核心技术结论。</div>
       </div>
       <aside class="side-col">
         <div class="side-card">
@@ -1203,27 +847,27 @@
         <div class="section-head">
           <p class="section-kicker">Tool 2</p>
           <h2>Docs-AI：官方文档的权威检索入口</h2>
-          <p class="section-copy">Docs-AI 将 Cisco 官方产品文档能力以 REST API、MCP 和应用入口的形式开放，为 AI assistant 和工程师提供权威、可追溯的文档依据。</p>
+          <p class="section-copy">Docs-AI 由文档团队开发，覆盖 CCO 官方文档并实时更新。它的核心价值不是“像搜索一样给链接”，而是给出结论的同时附上引用出处。</p>
         </div>
         <div class="grid-2">
           <div class="feature-list">
             <div class="feature-item">
               <strong>产品定位</strong>
-              <p>官方文档检索 API 与 MCP server，支持 AI agent 和应用直接访问 Cisco 文档体系，覆盖 5,000 余个 Cisco 产品。</p>
+              <p>面向 Cisco 官方文档的问答与检索入口，适合把“结论 + 证据”一起给出来。</p>
             </div>
             <div class="feature-item">
               <strong>核心价值</strong>
-              <p>提供统一接入、持续更新、官方权威的文档来源，减少自建 RAG 的维护成本，并提高结论可追溯性。</p>
+              <p>给出结论、原因和引用出处，让回答更可追溯，也更适合用于技术论证或配置 review。</p>
             </div>
           </div>
           <div class="feature-list">
             <div class="feature-item">
               <strong>适用场景</strong>
-              <p>功能支持确认、配置路径核对、版本行为查证、最佳实践引用，以及对客户或 BU 输出时附带官方依据。</p>
+              <p>功能支持确认、配置路径核对、版本行为查证、最佳实践引用，以及需要给客户或 BU 附官方依据的场景。</p>
             </div>
             <div class="feature-item">
               <strong>使用注意事项</strong>
-              <p>提问时应尽量明确产品、版本和功能范围。Docs-AI 最适合回答文档与规范问题，不直接替代 case-specific 的根因判断。</p>
+              <p>它只覆盖官方文档，不包含 TZ、Wiki 等内部文档；提问时最好带上产品、版本和功能范围。</p>
             </div>
           </div>
         </div>
@@ -1257,23 +901,23 @@
         <div class="section-head">
           <p class="section-kicker">Case 2</p>
           <h2>案例：BFD Echo 模式是否必须配置 <span class="no-break">no ip redirects</span></h2>
-          <p class="section-copy">Docs-AI 的典型价值在于：不仅给出结论，还能同时附上依据来源。对于“BFD Echo 是否必须关闭 redirect”这一类问题，官方文档型答案比经验型回答更容易形成可复核结论。</p>
+          <p class="section-copy">这个问题很适合现场演示，因为 Docs-AI 会同时给出答案、原因和引用段落，方便把经验判断变成可追溯结论。</p>
         </div>
         <div class="grid-2">
           <div class="feature-list">
             <div class="flow-card">
-              <strong>答案要点</strong>
+              <strong>现场希望看到的输出</strong>
               <ul>
-                <li>在启用 BFD Echo 模式前，需要配置 <span class="no-break">no ip redirects</span>，以避免高 CPU 利用率问题。</li>
-                <li>BFD Echo 依赖转发平面回显机制，不适合与 uRPF 同时启用，否则会造成会话 flap。</li>
-                <li>这一结论在 Cisco IOS 与 Catalyst 相关 BFD 文档中保持一致。</li>
+                <li>结论：在使用 BFD Echo 模式时，通常需要配置 <span class="no-break">no ip redirects</span>。</li>
+                <li>原因：为什么要这样配置，以及不这样做会带来什么影响。</li>
+                <li>引用：直接给出对应官方文档段落，便于后续复核或引用。</li>
               </ul>
             </div>
             <div class="flow-card">
               <strong>AI 价值</strong>
               <ul>
-                <li>不仅回答“是或不是”，还给出原因、约束条件和文档出处。</li>
-                <li>适合直接用于技术论证、配置 review 和后续 case 结论引用。</li>
+                <li>不仅回答“是或不是”，还给出原因和文档出处。</li>
+                <li>特别适合技术论证、配置审查和后续 case 结论引用。</li>
               </ul>
             </div>
           </div>
@@ -1302,17 +946,17 @@
         <div class="section-head">
           <p class="section-kicker">Tool 3</p>
           <h2><span class="no-break">File Copilot</span>：面向多附件场景的深度分析能力</h2>
-          <p class="section-copy">File Copilot 直接面向 case 附件开展开放式分析，可跨文件、跨格式、跨设备建立相关性，是从“手工摘要输入”走向“原始材料直接分析”的重要升级。</p>
+          <p class="section-copy">这是面向多附件场景的深度分析工具，核心就是解决 TAC Copilot 不能读取附件的问题。它能直接读 show tech、日志、pcap、doc、txt，并做跨文件相关性分析。</p>
         </div>
         <div class="grid-2">
           <div class="feature-list">
             <div class="feature-item">
               <strong>产品定位</strong>
-              <p>当前处于 pilot 阶段，可使用 OpenAI Codex agent 与 GPT-5 模型对 case 附件开展通用分析，并生成问题总结、根因判断与建议动作。</p>
+              <p>多附件深度分析工具，直接面向 show tech、日志、抓包和文档的联合分析。</p>
             </div>
             <div class="feature-item">
               <strong>关键能力</strong>
-              <p>开放式分析、多文件关联、跨格式联合分析，以及结合 Borg IC 结果的综合判断。</p>
+              <p>把分散证据压缩成“初判结论 + 证据 + 下一步动作”，并支持跨文件、跨格式、跨设备建立相关性。</p>
             </div>
             <div class="feature-item">
               <strong>典型输入</strong>
@@ -1326,11 +970,11 @@
             </div>
             <div class="feature-item">
               <strong>使用注意事项</strong>
-              <p>一次性提供足够的故障材料至关重要，包括时间窗口、症状描述、设备范围、拓扑关系和关键附件。输入越完整，分析结果越接近真实排障过程。</p>
+              <p>它无法持续对话，所以一次性把已知信息写完整：时间窗口、症状描述、设备范围、拓扑关系、关键附件和你的初步分析。</p>
             </div>
             <div class="feature-item">
-              <strong>分析方式</strong>
-              <p>可配合领域 skill 使用，例如 <span class="no-break">nexus_dcrs_tech_support_bundle_analyzer</span>，将 show tech、BFD 日志和平台经验结合为结构化分析过程。</p>
+              <strong>经验总结</strong>
+              <p>输入越完整，分析结果越接近真实排障过程；重点不是“让它读附件”，而是让它正确理解问题边界和证据范围。</p>
             </div>
           </div>
         </div>
@@ -1350,7 +994,7 @@
         <div class="section-head">
           <p class="section-kicker">Case 3</p>
           <h2>案例：N9K 与 ACI 对接的 BFD Echo 抖动分析</h2>
-          <p class="section-copy">通过 <span class="no-break">nexus_dcrs_tech_support_bundle_analyzer</span> 对 N9K show tech 与 BFD 日志进行联合分析，File Copilot 将多份日志压缩成“初判结论 + 证据 + 下一步动作”的工程输出。</p>
+          <p class="section-copy">File Copilot 把多台设备在同一时间窗口的日志串起来，发现多个节点都记录到 “Echo Function Failed”，初判更像 Echo 回显被对端或共享路径丢弃，而不是单链路控制面超时。</p>
         </div>
         <div class="grid-2">
           <div class="feature-list">
@@ -1386,11 +1030,11 @@
       </div>
       <aside class="side-col">
         <div class="side-card">
-          <h4>观众应记住的重点</h4>
+          <h4>现场练习方式</h4>
           <ul>
-            <li>AI 已将“BFD Echo 失败”与“ACI / 共享路径疑点”做出优先级排序。</li>
-            <li>AI 给出的建议动作具备明确工程顺序，而不是泛泛建议。</li>
-            <li>输入越完整，输出越接近真实排障流程。</li>
+            <li>先给一段短日志片段</li>
+            <li>请两位同学说最关心的证据点</li>
+            <li>再对比 AI 的初判和建议动作</li>
           </ul>
         </div>
       </aside>
@@ -1401,27 +1045,27 @@
         <div class="section-head">
           <p class="section-kicker">Tool 4</p>
           <h2><span class="no-break">SMX</span>：面向领域知识的专家型助手</h2>
-          <p class="section-copy">SMX 是面向特定技术域的 AI assistant framework，可将团队文档、知识、指令与工具整合为持续演进的领域专家，并与 GitHub Copilot 等入口配合使用。</p>
+          <p class="section-copy">SMX 是研发团队做的领域专家工具。它的价值在于代码级分析：当问题已经大致收敛到某个组件时，它能把 EDCS 文档、源码级说明和验证命令串起来。</p>
         </div>
         <div class="grid-2">
           <div class="feature-list">
             <div class="feature-item">
               <strong>产品定位</strong>
-              <p>面向特定技术域的专家助手框架，支持文档摄取、自学习、custom tools 和 inter-SMX collaboration。</p>
+              <p>把团队 EDCS 文档、源码级知识和 domain tools 做成可检索的专家助手。</p>
             </div>
             <div class="feature-item">
               <strong>典型场景</strong>
-              <p>代码级专家帮助、领域知识问答、runbook 咨询、新人 onboarding，以及将团队私有经验沉淀为持续可访问的专家能力。</p>
+              <p>问题已定位到某个模块后，继续查相关 C 代码、组件交互、验证命令和版本差异。</p>
             </div>
           </div>
           <div class="feature-list">
             <div class="feature-item">
               <strong>核心价值</strong>
-              <p>为团队私有知识提供可检索、可持续维护的表达形式，适合处理“公开文档没有、但团队长期积累里有”的问题。</p>
+              <p>适合从“问题在哪个组件”继续往下走到“这段代码/这条路径在做什么”，尤其适合多组件协作场景。</p>
             </div>
             <div class="feature-item">
               <strong>使用注意事项</strong>
-              <p>需要选择正确的 domain，并保证其知识库、指令和工具长期维护。SMX 的效果高度依赖域本身的建设质量。</p>
+              <p>平台和版本差异仍需人工判断；SMX 提供的是更深的工程解释，不是万能问答。</p>
             </div>
           </div>
         </div>
@@ -1455,18 +1099,25 @@
         <div class="section-head">
           <p class="section-kicker">Case 4</p>
           <h2>案例：vPC 环境下 ARP 是否同步、是否实时</h2>
-          <p class="section-copy">SMX 的价值体现在“源码级和团队级知识的解释能力”。这个案例不是单纯回答 yes / no，而是把 NX-OS 内部组件、同步模式和验证命令一起组织成工程解释。</p>
+          <p class="section-copy">这个问题看起来简单，真正难点是不同平台、不同版本的行为并不完全一样。SMX 的价值，是把源码片段、内部说明和验证命令拼成一个工程解释。</p>
         </div>
         <div class="grid-2">
           <div class="feature-list">
             <div class="flow-card">
-              <strong>我的问题 1：vPC 环境下 ARP 有同步机制吗？</strong>
-              <p>AI的回答：是的，NX-OS 在 vPC 环境下有 ARP 同步机制。 根据检索到的源码级文档，ARP 进程中存在专门的 MCEC/vPC 路径（arp_mcec.c），并且 ARP 进程链接了 libmcecm_stub 库，这是 MCEC（Multi-Chassis EtherChannel，即 vPC 的内部框架名）的核心集成模块。</p>
+              <strong>为什么这个问题不好答</strong>
+              <ul>
+                <li>它不是一个简单的 yes / no 问题。</li>
+                <li>不同平台、不同版本的行为可能有差异。</li>
+                <li>公开文档通常不会把内部组件关系讲得很透。</li>
+              </ul>
             </div>
             <div class="flow-card">
-              <strong>我的问题 2：这个同步会实时进行还是只在重启时候？</strong>
-              <p>AI的回答：## ARP 同步是实时进行的</p>
-              <p>根据检索到的 NX-OS 源码架构文档，vPC 环境下的 ARP 同步是**实时（real-time）进行的**，而非仅在重启时触发。</p>
+              <strong>SMX 给出的工程解释</strong>
+              <ul>
+                <li>NX-OS 在 vPC 环境下有 ARP 同步机制。</li>
+                <li>同步是实时进行的，而不是只在重启时触发。</li>
+                <li>可以结合 <span class="no-break">arp_mcec.c</span> 相关说明和验证命令形成工程口径。</li>
+              </ul>
             </div>
           </div>
           <div class="feature-list">
@@ -1491,67 +1142,76 @@
       </aside>
     </section>
 
-    <section class="slide" id="slide-12" data-title="GitHub Copilot + MCP：走向灵活定制与深度推理的 Agent">
+    <section class="slide" id="slide-12" data-title="GitHub Copilot + MCP：可定制的工作流引擎">
       <div class="main-col">
         <div class="section-head">
           <p class="section-kicker">Tool 5</p>
-          <h2>GitHub Copilot：走向灵活定制与深度推理的 Agent</h2>
-          <p class="section-copy">不再仅仅是对话工具，通过灵活定制数据源、模型选型、提示词注入与 Skills 挂载，形成可持续自我改进与深度推理的工作流。</p>
+          <h2>GitHub Copilot + MCP：可定制的工作流引擎</h2>
+          <p class="section-copy">如果前面几个工具更像“单点能力”，这里更像一个可以自己编排的工作台：按需接入数据源，自由切换模型，注入提示词和 Skills，把高频复杂任务沉淀成可复用工作流。</p>
         </div>
         <div class="grid-2">
           <div class="feature-list">
             <div class="feature-item">
-              <strong>1. 数据源 (MCP / Data Sources) 的按需接入</strong>
-              <p>不仅仅局限于本地文件，可灵活接入内部 BUG 数据、历史 SR、团队私有 Wiki 与 Docs-AI。打通内部外系统壁垒，让 Agent 获得最新、最权威的业务上下文。</p>
+              <strong>1. 运行环境与入口</strong>
+              <p>VS Code 里可以直接演示运行模式、模型选择、Session、Skills 和 MCP，把“对话”变成“可执行工作流”。</p>
             </div>
             <div class="feature-item">
-              <strong>2. 模型选型 (Model Selection) 的自由切换</strong>
-              <p>针对逻辑复杂的疑难问题可选 GPT-5.4 或 Opus 4.6 等高推理模型，针对基础长文本处理可快速切回 Haiku 4.6 或 Gemini，兼顾成本、速度与准确度。</p>
+              <strong>2. 数据源与模型</strong>
+              <p>按需接入文档、Bug、Topic Search、历史经验等数据源；再根据任务复杂度切换模型，兼顾速度、成本和推理能力。</p>
             </div>
           </div>
           <div class="feature-list">
             <div class="feature-item">
-              <strong>3. 提示词与 Skills (Prompt & Skills) 的工程沉淀</strong>
-              <p>通过自定义 .instructions 文件或挂载特定域的 SKILL（如 nxos-universal-triage），强制 Agent 在分析前载入领域专家的检查清单和经验，避免幻觉与泛泛而谈。</p>
+              <strong>3. Skills 的价值</strong>
+              <p>适合沉淀高频复杂任务，例如给 CASE 分析固定命令、检查顺序和输出格式。</p>
             </div>
             <div class="feature-item">
-              <strong>4. 持续提醒与高阶推理能力 (Reasoning)</strong>
-              <p>让 AI 懂得“三思而后行”。在长上下文中，AI 能持续记住你设定的推理纪律、分析边界与必须回答的具体疑问，有效整理复杂多设备的碎片日志，实现多步自主推理。</p>
+              <strong>4. 使用提醒</strong>
+              <p>要考虑数据治理、接入成本、模型选型和 Skills 维护；不是所有问题都需要 Skills。</p>
             </div>
           </div>
         </div>
       </div>
       <aside class="side-col">
         <div class="side-card">
-          <h4>适合优先采用的任务</h4>
+          <h4>做 Skills 的经验</h4>
           <ul>
-            <li>需要跨多个系统整合证据</li>
-            <li>需要统一编排工具调用与输出格式</li>
-            <li>需要把高频复杂任务固化为可复用流程</li>
+            <li>不要给 AI 它本来就会的东西</li>
+            <li>只注入需要定制的命令、流程和 Cisco 风格</li>
+            <li>Skills 太大、太杂，效果反而会下降</li>
+          </ul>
+        </div>
+        <div class="side-card">
+          <h4>现场演示会看什么</h4>
+          <ul>
+            <li>运行模式与模型选择</li>
+            <li>Session、Skills 与 MCP</li>
+            <li>两个复杂案例如何被编排</li>
           </ul>
         </div>
       </aside>
     </section>
 
-    <section class="slide" id="slide-13" data-title="案例：跨设备路径分析与精确丢包定位">
+    <section class="slide" id="slide-13" data-title="案例：复杂拓扑下的丢包路径分析">
       <div class="main-col">
         <div class="section-head">
           <p class="section-kicker">Case 5</p>
-          <h2>案例：跨设备路径分析与精确丢包定位</h2>
-          <p class="section-copy">这一页建议直接在 VS Code 中分享文件内容。与其展示单张截图，不如让观众看到 Agent 如何在文本、抓包与多设备信息之间来回切换并完成 RCA。</p>
+          <h2>案例：复杂拓扑下的丢包路径分析</h2>
+          <p class="section-copy">这是我“知道怎么做，但纯手工会花大半天”的那类问题。重点不是单点命令，而是要在多设备、多抓包、多段路径之间把证据串起来。</p>
         </div>
         <div class="grid-2">
           <div class="feature-list">
             <div class="flow-card">
-              <strong>案例主题：29.2.8.50 周期性 SNMP 访问丢包 RCA</strong>
-              <p>问题背景：涉及 10 台设备、服务器侧与负载均衡的杂乱环境。我们需要确认跨界丢包发生在去程还是回程，在哪一段非对称路径丢弃，并形成报告。</p>
-              <p>人的困境：逐点核对 request_id、整理 MAC/IP 映射、串联十个文件的信息虽然也能做，但将耗费大量时间并且极易出错。</p>
+              <strong>为什么耗时</strong>
+              <p>要逐点核对 request_id、MAC/IP 映射、去程回程路径，还要串联十台设备、服务器侧和负载均衡两侧的信息。</p>
+              <p>人工也能做，但会耗费大量时间，而且非常容易在碎片信息之间漏掉关键关联。</p>
             </div>
             <div class="flow-card">
-              <strong>现场演示步骤</strong>
+              <strong>Agent 帮你省下什么</strong>
               <ul>
-                <li>展示原始海量 SNMP 抓包和分布文件碎片</li>
-                <li>展示在 VS Code 中调用模型结合 MCP 分析，完成完整 RCA</li>
+                <li>在文本、抓包和多设备信息之间来回切换</li>
+                <li>快速判断丢包发生在去程还是回程</li>
+                <li>把零散证据组织成可交付的 RCA</li>
               </ul>
             </div>
           </div>
@@ -1567,38 +1227,39 @@
       </div>
       <aside class="side-col">
         <div class="side-card">
-          <h4>观众应记住的重点</h4>
+          <h4>现场互动</h4>
           <ul>
-            <li>它不仅能“找信息”，还能“组织证据”。</li>
-            <li>它不仅能“看一份文件”，还能“串多份文件”。</li>
-            <li>它特别适合复杂 RCA 和高频分析流程沉淀。</li>
+            <li>先请一位同学讲讲他的排查思路</li>
+            <li>再展示 Agent 如何补齐证据链</li>
+            <li>最后对比人工和 Agent 的时间成本</li>
           </ul>
         </div>
       </aside>
     </section>
 
-    <section class="slide" id="slide-14" data-title="案例：组播随机丢包的多步排障与高阶定位">
+    <section class="slide" id="slide-14" data-title="案例：50000 个包里找 1 个丢失的">
       <div class="main-col">
         <div class="section-head">
           <p class="section-kicker">Case 6</p>
-          <h2>案例：组播随机丢包的多步排障与高阶定位</h2>
-          <p class="section-copy">这个案例展示了如何在 Agent 的辅助下，从 50,001 个数据包中找出一包丢失的时间点，进而联动分析特定时刻的控制面日志。</p>
+          <h2>案例：50000 个包里找 1 个丢失的</h2>
+          <p class="section-copy">这是我拿到问题也会先挠头的场景：50001 个数据包里只丢 1 个，先要找出是哪一个、精确到什么时间点，再去对齐那一刻的控制面日志。</p>
         </div>
         <div class="grid-2">
           <div class="feature-list">
             <div class="flow-card">
-              <strong>问题背景与范围</strong>
+              <strong>问题难点</strong>
               <ul>
-                <li><strong>概要:</strong> 两台新接入的 N93180 交换机上，业务流 `(10.140.50.93, 225.0.2.189)` 出现不定期丢包。客户抓包确认收到流量，但故障时未能从本地下联接收口发出。</li>
-                <li><strong>范围:</strong> 两台 N9K 下 VLAN 850 内的本地接收者；H42 重点接收口为 `Ethernet1/22`。</li>
-                <li><strong>症状:</strong> 两台丢包不同步；`Eth1/22` 增加静态组仍丢包；后客户关闭恒生 NSQ 冷备后恢复。</li>
+                <li>50001 个数据包（49999 个 ICMP）里只丢了一个。</li>
+                <li>要先找出具体丢的是哪个 sequence、精确到什么时间点。</li>
+                <li>找到时间点之后，还要回到日志里解释它为什么会丢。</li>
               </ul>
             </div>
             <div class="flow-card">
-              <strong>客户的核心疑问</strong>
+              <strong>Agent 后续怎么继续</strong>
               <ol>
-                <li>为什么静态组加上后仍丢包？</li>
-                <li>在 LAB 重现的 50001 个数据包 (49999 个 ICMP) 中，到底丢了哪一个 sequence？如何找到精确到秒的丢失时间？</li>
+                <li>找到精确丢失包和时间点。</li>
+                <li>对齐对应时刻的控制面和组表日志。</li>
+                <li>继续分析动态/静态组表项交互对转发的影响。</li>
               </ol>
             </div>
           </div>
@@ -1624,25 +1285,37 @@
         <div class="section-head">
           <p class="section-kicker">Closing & Summary</p>
           <h2>回顾与总结：按任务特点灵活选型</h2>
-          <p class="section-copy">对于 TAC 团队，五类工具更适合被理解为一个工具箱：先解决高频低门槛任务，再逐步向纵深复杂排障与灵活 Agent 编排演进。</p>
+          <p class="section-copy">最后快速回顾三点：先看通用框架，再看五类工具的适用范围，最后别忘了 TAC 工程师在 AI 流程中的责任。</p>
         </div>
         
         <div class="grid-2" style="margin-bottom: 24px;">
           <div class="selection-card">
-            <strong>核心选型建议</strong>
-            <p>1. 日常沟通重写与基础摘要：优先用 <strong>TAC Copilot</strong></p>
-            <p>2. 确认指标、命令与支持矩阵：优先查 <strong>Docs-AI</strong></p>
-            <p>3. 原始多附件压缩、交叉对照：直接上 <strong>File Copilot</strong></p>
-            <p>4. 内部长期代码/架构解惑：向 <strong>SMX</strong> 提问</p>
-            <p>5. 长文本复杂推理、持续记忆与跨域：用 <strong>GitHub Copilot + Skills</strong> 构建工作流</p>
+            <strong>今天要带走的 3 个点</strong>
+            <p>1. <strong>有效产出 = 模型能力 × 任务上下文 × 推理预算</strong></p>
+            <p>2. 五类工具分别对应重写摘要、官方文档、多附件分析、领域专家和 Agent 编排</p>
+            <p>3. AI 负责提速，TAC 工程师负责审查方向、结论和证据</p>
           </div>
           <div class="selection-card">
-            <strong>关键结论</strong>
-            <p>真正产生稳定价值的不是单一工具本身，而是“遇到什么问题用什么刀”，并辅以后置的人工验证闭环。将工具箱用顺，就是 AI Empowered TAC 的关键。</p>
+            <strong>按任务选刀</strong>
+            <p>日常沟通重写与基础摘要优先用 <strong>TAC Copilot</strong>；确认文档依据优先查 <strong>Docs-AI</strong>；多附件压缩与交叉对照直接上 <strong>File Copilot</strong>；内部长期代码/架构解惑向 <strong>SMX</strong> 提问；跨系统长链路分析再用 <strong>GitHub Copilot + MCP</strong> 组工作流。</p>
           </div>
         </div>
 
       </div>
+      <aside class="side-col">
+        <div class="side-card">
+          <h4>一句话总结</h4>
+          <p>不是某一个工具最强，而是遇到什么问题用什么工具。</p>
+        </div>
+        <div class="side-card">
+          <h4>工程闭环</h4>
+          <ul>
+            <li>看方向是不是对的</li>
+            <li>看结论是不是站得住</li>
+            <li>看证据是不是足够支撑</li>
+          </ul>
+        </div>
+      </aside>
     </section>
 
     <section class="slide" id="slide-16" data-title="Q&A">
@@ -1677,16 +1350,39 @@
     <button type="button" id="nextBtn">下一页</button>
   </div>
 
+  <button class="click-zone prev" id="clickPrev" aria-label="上一页"></button>
+  <button class="click-zone next" id="clickNext" aria-label="下一页"></button>
+
   <script>
     const slides = Array.from(document.querySelectorAll('.slide'));
     const deck = document.getElementById('deck');
     const progressFill = document.getElementById('progressFill');
     const slideCounter = document.getElementById('slideCounter');
+    const sectionName = document.getElementById('sectionName');
+    const overviewState = document.getElementById('overviewState');
     const topbarTitle = document.getElementById('topbarTitle');
     const dots = Array.from(document.querySelectorAll('.dot-nav a'));
     const prevBtn = document.getElementById('prevBtn');
     const nextBtn = document.getElementById('nextBtn');
+    const clickPrev = document.getElementById('clickPrev');
+    const clickNext = document.getElementById('clickNext');
     let currentIndex = 0;
+    let isOverviewMode = false;
+
+    const sectionMap = [
+      { until: 1, name: 'Opening' },
+      { until: 2, name: 'Framework' },
+      { until: 6, name: 'Tools 1-2' },
+      { until: 10, name: 'Tools 3-4' },
+      { until: 13, name: 'Copilot + Cases' },
+      { until: 15, name: 'Closing' }
+    ];
+
+    function getSection(index) {
+      const slideNumber = index + 1;
+      const matched = sectionMap.find((section) => slideNumber <= section.until);
+      return matched ? matched.name : 'Overview';
+    }
 
     function updateActive(index) {
       currentIndex = index;
@@ -1694,15 +1390,27 @@
       const current = String(index + 1).padStart(2, '0');
       const max = String(total).padStart(2, '0');
       slideCounter.textContent = `${current} / ${max}`;
-      topbarTitle.textContent = slides[index].dataset.title || 'AI 驱动的排障革命：TAC 实战工具箱选型';
+      sectionName.textContent = getSection(index);
+      topbarTitle.textContent = slides[index].dataset.title || '与AI共同成长：TAC AI 工具箱';
       progressFill.style.width = `${((index + 1) / total) * 100}%`;
-      dots.forEach((dot, dotIndex) => {
-        dot.classList.toggle('active', dotIndex === index);
-      });
+      dots.forEach((dot, dotIndex) => dot.classList.toggle('active', dotIndex === index));
+    }
+
+    function toggleOverview(forceState) {
+      const next = typeof forceState === 'boolean' ? forceState : !isOverviewMode;
+      isOverviewMode = next;
+      deck.classList.toggle('overview', isOverviewMode);
+      overviewState.textContent = isOverviewMode ? 'Overview Mode' : 'Story Mode';
+      if (!isOverviewMode) {
+        slides[currentIndex].scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
     }
 
     function goToSlide(index) {
       const boundedIndex = Math.max(0, Math.min(index, slides.length - 1));
+      if (isOverviewMode) {
+        toggleOverview(false);
+      }
       slides[boundedIndex].scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
@@ -1715,39 +1423,77 @@
         return;
       }
 
+      visible.target.classList.add('in-view');
       const index = slides.indexOf(visible.target);
       if (index !== -1) {
         updateActive(index);
       }
     }, {
       root: deck,
-      threshold: [0.3, 0.55, 0.8]
+      threshold: [0.35, 0.55, 0.8]
     });
 
-    slides.forEach((slide) => observer.observe(slide));
+    slides.forEach((slide, index) => {
+      observer.observe(slide);
+      slide.addEventListener('click', () => {
+        if (isOverviewMode) {
+          goToSlide(index);
+        }
+      });
+
+      const footer = document.createElement('div');
+      footer.className = 'slide-footer';
+      footer.innerHTML = `<span><strong>Cisco</strong> TAC AI Chalk Talk</span><span>Confidential | Slide ${String(index + 1).padStart(2, '0')}</span>`;
+      slide.appendChild(footer);
+    });
 
     prevBtn.addEventListener('click', () => goToSlide(currentIndex - 1));
     nextBtn.addEventListener('click', () => goToSlide(currentIndex + 1));
+    clickPrev.addEventListener('click', () => goToSlide(currentIndex - 1));
+    clickNext.addEventListener('click', () => goToSlide(currentIndex + 1));
+
+    dots.forEach((dot, index) => {
+      dot.addEventListener('click', (event) => {
+        event.preventDefault();
+        goToSlide(index);
+      });
+    });
 
     document.addEventListener('keydown', (event) => {
-      if (event.key === 'ArrowDown' || event.key === 'PageDown' || event.key === 'ArrowRight') {
+      const key = event.key;
+
+      if (key === 'ArrowDown' || key === 'PageDown' || key === 'ArrowRight' || key === ' ') {
         event.preventDefault();
         goToSlide(currentIndex + 1);
       }
 
-      if (event.key === 'ArrowUp' || event.key === 'PageUp' || event.key === 'ArrowLeft') {
+      if (key === 'ArrowUp' || key === 'PageUp' || key === 'ArrowLeft' || key === 'Backspace') {
         event.preventDefault();
         goToSlide(currentIndex - 1);
       }
 
-      if (event.key === 'Home') {
+      if (key === 'Home') {
         event.preventDefault();
         goToSlide(0);
       }
 
-      if (event.key === 'End') {
+      if (key === 'End') {
         event.preventDefault();
         goToSlide(slides.length - 1);
+      }
+
+      if (key.toLowerCase() === 'o' || key === 'Escape') {
+        event.preventDefault();
+        toggleOverview();
+      }
+
+      if (key.toLowerCase() === 'f') {
+        event.preventDefault();
+        if (!document.fullscreenElement) {
+          document.documentElement.requestFullscreen().catch(() => {});
+        } else {
+          document.exitFullscreen().catch(() => {});
+        }
       }
     });
 
